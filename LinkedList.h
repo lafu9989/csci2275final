@@ -16,8 +16,10 @@ struct LLPerson{
 
 class LinkedList{
     private:
-        LLPerson * root;
+        LLPerson *root; 
+        LLPerson *tail;
     public:
+        LinkedList();
         void push(string name); 
         void printLL(); 
 };

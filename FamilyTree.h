@@ -40,6 +40,7 @@ class FamilyTree{
         Person * findPerson(string name); 
         Family * findFamily(string p1, string p2); 
     public:
+        FamilyTree();
         bool buildTree(string file); 
         void printTree(); 
         bool addFamily(string p1, string p2); 
