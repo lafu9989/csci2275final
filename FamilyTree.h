@@ -21,6 +21,8 @@ struct Family{
     Family(Person *parent1, Person *parent2){
         this->parent1 = parent1; 
         this->parent2 = parent2; 
+        visited = false;
+        FamID = -1; 
     }
 };
 
@@ -40,10 +42,11 @@ class FamilyTree{
         Person * findPerson(string name); 
         Family * findFamily(string p1, string p2); 
     public:
-        FamilyTree();
+        FamilyTree(){};
+        ~FamilyTree(){}; 
         bool buildTree(string file); 
         void printTree(); 
-        bool addFamily(string p1, string p2); 
+        Family * addFamily(string p1, string p2); 
         bool addChild(string p1, string p2, string child); 
         void assignFamily(); 
         void assignFamily(string name); //overload with family name
