@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stack>
 
 using namespace std; 
 
@@ -105,14 +106,37 @@ void FamilyTree::assignFamily(){
         }
         if(i < families.size()){
             cout << "Group " << FamID << ":" << endl; 
-        } //for debugging
-        DFSLabel(i, FamID); 
+            DFSLabel(i, FamID); 
+        } 
         FamID++; 
     }
 }
 
 void FamilyTree::DFSLabel(int i, int ID){
-
+    stack<int> s;
+    s.push(i); 
+    while(!s.empty()){
+        int current = s.top(); 
+        s.pop(); 
+        if(current != -1 && !families[current].visited){
+            families[current].FamID = ID; 
+            families[current].visited = true;
+            families[current].parent1->FamID = ID;
+            families[current].parent1->visited = true;
+            cout << families[current].parent1->name << endl; 
+            s.push(families[current].parent1->parents);
+            families[current].parent2->FamID = ID; 
+            families[current].parent2->visited = true;
+            cout << families[current].parent2->name << endl; 
+            s.push(families[current].parent2->parents); 
+            for(int i = 0; i < families[current].children.size(); i++){
+                families[current].children[i]->FamID = ID; 
+                families[current].children[i]->visited = true;
+                cout << families[current].children[i]->name << endl; 
+                s.push(families[current].children[i]->children); 
+            }
+        }
+    }
 }
     
 void FamilyTree::assignFamily(string name){ //overload with family name
