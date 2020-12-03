@@ -46,19 +46,22 @@ struct Person{
 class FamilyTree{
     private:
         vector<Family> families; 
+        bool assigned;
         Person * findPerson(string name); 
         int findFamily(string p1, string p2); //return int of family
         void DFSLabel(int i, int ID); 
+        void unvisit(); 
 
     public:
-        FamilyTree(){};
+        FamilyTree(){
+            assigned = false;
+        };
         ~FamilyTree(){}; 
         bool buildTree(string file); 
         void printTree(); 
         int addFamily(string p1, string p2); //return int of family
         bool addChild(string p1, string p2, string child); 
         void assignFamily(); 
-        void assignFamily(string name); //overload with family name
         bool areRelated(string name1, string name2);
         LinkedList findAncestors(string name); 
         LinkedList findSiblings(string name); 

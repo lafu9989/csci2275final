@@ -45,3 +45,14 @@ string LinkedList::valueAt(int index){
         return temp->name; 
     }
 }
+
+bool LinkedList::isEmpty(){
+    if(currentSize == 0){
+        return true;
+    }
+    return false;
+}
+
+int LinkedList::size(){
+    return currentSize; 
+}

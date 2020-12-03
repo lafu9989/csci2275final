@@ -1,5 +1,6 @@
 #include "FamilyTree.h"
 #include "LinkedList.h"
+#include <iostream>
 
 using namespace std; 
 
@@ -12,5 +13,5 @@ int main(int argc, const char *argv[]){
     // LinkedList children = myTree.findSiblings("Fred Weasley"); 
     // children.printLL(); 
 
-    myTree.assignFamily(); 
+    cout << myTree.findCommonAncestor("Victoire Weasley", "Percy I. Weasley") << endl; 
 }

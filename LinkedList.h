@@ -24,6 +24,8 @@ class LinkedList{
         void push(string name); 
         void printLL(); 
         string valueAt(int index); 
+        bool isEmpty();
+        int size(); 
 };
 
 

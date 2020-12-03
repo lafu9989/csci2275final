@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <stack>
+#include <queue>
 
 using namespace std; 
 
@@ -97,7 +98,7 @@ bool FamilyTree::addChild(string p1, string p2, string child){
     return true; 
 }
 
-void FamilyTree::assignFamily(){
+void FamilyTree::assignFamily(){ //uses modified DFS to assign family IDS to anyone that is related (including by marriage)
     int FamID = 1; 
     int i = 0; 
     while(i < families.size()){
@@ -105,11 +106,13 @@ void FamilyTree::assignFamily(){
             i++; 
         }
         if(i < families.size()){
-            cout << "Group " << FamID << ":" << endl; 
+            //cout << "Group " << FamID << ":" << endl; //for debugging
             DFSLabel(i, FamID); 
         } 
         FamID++; 
     }
+    assigned = true;
+    unvisit(); 
 }
 
 void FamilyTree::DFSLabel(int i, int ID){
@@ -123,32 +126,67 @@ void FamilyTree::DFSLabel(int i, int ID){
             families[current].visited = true;
             families[current].parent1->FamID = ID;
             families[current].parent1->visited = true;
-            cout << families[current].parent1->name << endl; 
+            //cout << families[current].parent1->name << endl; //for debugging
             s.push(families[current].parent1->parents);
             families[current].parent2->FamID = ID; 
             families[current].parent2->visited = true;
-            cout << families[current].parent2->name << endl; 
+            //cout << families[current].parent2->name << endl; //for debugging
             s.push(families[current].parent2->parents); 
             for(int i = 0; i < families[current].children.size(); i++){
                 families[current].children[i]->FamID = ID; 
                 families[current].children[i]->visited = true;
-                cout << families[current].children[i]->name << endl; 
+                //cout << families[current].children[i]->name << endl; //for debugging
                 s.push(families[current].children[i]->children); 
             }
         }
     }
 }
-    
-void FamilyTree::assignFamily(string name){ //overload with family name
-
-}
         
 bool FamilyTree::areRelated(string name1, string name2){
-
+    if(!assigned){
+        assignFamily();
+    }
+    Person *p1 = findPerson(name1);
+    Person *p2 = findPerson(name2); 
+    if(p1 == nullptr || p2 == nullptr){
+        return false; 
+    }
+    if(p1->FamID == p2->FamID){
+        return true;
+    }
+    return false; 
 }
         
-LinkedList FamilyTree::findAncestors(string name){
+LinkedList FamilyTree::findAncestors(string name){ //uses BFS to find ancestors of a person
+    Person *p1 = findPerson(name); 
+    LinkedList toReturn; 
+    queue<int> q; 
+    if(p1 == nullptr){
+        return toReturn; 
+    }
+    q.push(p1->parents); 
+    while(!q.empty()){
+        int current = q.front(); 
+        q.pop(); 
+        if(current != -1){
+            toReturn.push(families[current].parent1->name);
+            toReturn.push(families[current].parent2->name); 
+            q.push(families[current].parent1->parents);
+            q.push(families[current].parent2->parents); 
+        }
+    }
+    return toReturn; //list should be ordered as parents, grandparents, greatgrandparents, etc.  
+}
 
+void FamilyTree::unvisit(){
+    for(int i = 0; i < families.size(); i++){
+        families[i].visited = false; 
+        families[i].parent1->visited = false;
+        families[i].parent2->visited = false;
+        for(int j = 0; j < families[i].children.size(); j++){
+            families[i].children[j]->visited = false; 
+        }
+    }
 }
 
 LinkedList FamilyTree::findSiblings(string name){
@@ -173,5 +211,17 @@ LinkedList FamilyTree::findChildren(string name){
 }
 
 string FamilyTree::findCommonAncestor(string name1, string name2){
-
+    LinkedList person1 = findAncestors(name1);
+    LinkedList person2 = findAncestors(name2); 
+    if(person1.isEmpty() || person2.isEmpty()){
+        return "";
+    }
+    for(int i = 0; i < person1.size(); i++){
+        for(int j = 0; j < person2.size(); j++){
+            if(person1.valueAt(i) == person2.valueAt(j)){
+                return person1.valueAt(i);
+            }
+        }
+    }
+    return ""; 
 }
