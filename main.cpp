@@ -7,5 +7,8 @@ int main(int argc, const char *argv[]){
     string filename = argv[1]; 
     FamilyTree myTree; 
     myTree.buildTree(filename);
-    myTree.printTree(); 
+    //myTree.printTree(); 
+
+    LinkedList children = myTree.findSiblings("Fred Weasley"); 
+    children.printLL(); 
 }

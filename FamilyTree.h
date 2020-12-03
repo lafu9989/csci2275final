@@ -12,7 +12,7 @@ struct Person;
 struct Family;
 
 struct Family{
-    vector<Person> children;
+    vector<Person *> children; //store pointers to children, not children themselves so its less complicated
     Person *parent1;
     Person *parent2; 
     bool visited;
@@ -28,11 +28,18 @@ struct Family{
 
 struct Person{
     string name;
-    Family *parents;
-    Family *children;
+    int parents;
+    int children;
+    bool visited;
+    int FamID; 
+    //store int of family instead of pointer --> less complex
 
     Person(string name){
         this->name = name; 
+        parents = -1; 
+        children = -1; 
+        visited = false; 
+        FamID = -1; 
     }
 };
 
@@ -40,13 +47,15 @@ class FamilyTree{
     private:
         vector<Family> families; 
         Person * findPerson(string name); 
-        Family * findFamily(string p1, string p2); 
+        int findFamily(string p1, string p2); //return int of family
+        void DFSLabel(int i, int ID); 
+
     public:
         FamilyTree(){};
         ~FamilyTree(){}; 
         bool buildTree(string file); 
         void printTree(); 
-        Family * addFamily(string p1, string p2); 
+        int addFamily(string p1, string p2); //return int of family
         bool addChild(string p1, string p2, string child); 
         void assignFamily(); 
         void assignFamily(string name); //overload with family name

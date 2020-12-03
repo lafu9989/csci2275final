@@ -18,10 +18,12 @@ class LinkedList{
     private:
         LLPerson *root; 
         LLPerson *tail;
+        int currentSize; 
     public:
         LinkedList();
         void push(string name); 
         void printLL(); 
+        string valueAt(int index); 
 };
 
 

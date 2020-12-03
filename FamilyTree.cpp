@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 using namespace std; 
 
@@ -16,8 +17,8 @@ Person * FamilyTree::findPerson(string name){
         }
         else{
             for(int j = 0; j < families[i].children.size(); j++){
-                if(families[i].children[j].name == name){
-                    return &families[i].children[j]; 
+                if(families[i].children[j]->name == name){
+                    return families[i].children[j]; 
                 }
             }
         }
@@ -25,13 +26,13 @@ Person * FamilyTree::findPerson(string name){
     return nullptr;
 }
 
-Family * FamilyTree::findFamily(string p1, string p2){
+int FamilyTree::findFamily(string p1, string p2){
     for(int i = 0; i < families.size(); i++){
         if(families[i].parent1->name == p1 && families[i].parent2->name == p2){
-            return &families[i]; 
+            return i; 
         }
     }
-    return nullptr; 
+    return -1; 
 }
 
 bool FamilyTree::buildTree(string file){
@@ -59,13 +60,13 @@ void FamilyTree::printTree(){
     for(int i = 0; i < families.size(); i++){
         cout << families[i].parent1->name << " + " << families[i].parent2->name << ": "; 
         for(int j = 0; j < families[i].children.size(); j++){
-            cout << families[i].children[j].name << ", "; 
+            cout << families[i].children[j]->name << ", "; 
         }
         cout << endl; 
     }
 }
         
-Family * FamilyTree::addFamily(string p1, string p2){
+int FamilyTree::addFamily(string p1, string p2){
     Person *parent1 = findPerson(p1); 
     Person *parent2 = findPerson(p2); 
     if(parent1 == nullptr){
@@ -76,23 +77,41 @@ Family * FamilyTree::addFamily(string p1, string p2){
     }
     Family newFamily(parent1, parent2); 
     families.push_back(newFamily);
-    return &newFamily;  
+    parent1->children = families.size()-1; 
+    parent2->children = families.size()-1;  
+    return families.size()-1;  
 }
         
 bool FamilyTree::addChild(string p1, string p2, string child){
-    Family *theFamily = findFamily(p1, p2); 
+    int theFamily = findFamily(p1, p2); 
     Person *toAdd = findPerson(child);
     if(toAdd == nullptr){
         toAdd = new Person(child); 
     }
-    if(theFamily == nullptr){
+    if(theFamily == -1){
         theFamily = addFamily(p1, p2); 
     }
-    theFamily->children.push_back(*toAdd); 
+    families[theFamily].children.push_back(toAdd); 
+    toAdd->parents = theFamily; 
     return true; 
 }
 
 void FamilyTree::assignFamily(){
+    int FamID = 1; 
+    int i = 0; 
+    while(i < families.size()){
+        while(families[i].visited){
+            i++; 
+        }
+        if(i < families.size()){
+            cout << "Group " << FamID << ":" << endl; 
+        } //for debugging
+        DFSLabel(i, FamID); 
+        FamID++; 
+    }
+}
+
+void FamilyTree::DFSLabel(int i, int ID){
 
 }
     
@@ -109,11 +128,24 @@ LinkedList FamilyTree::findAncestors(string name){
 }
 
 LinkedList FamilyTree::findSiblings(string name){
-
+    Person *p1 = findPerson(name); 
+    int f = p1->parents;
+    LinkedList toReturn; 
+    for(int i = 0; i < families[f].children.size(); i++){
+        if(families[f].children[i]->name != name)
+            toReturn.push(families[f].children[i]->name); 
+    }
+    return toReturn; 
 }
         
 LinkedList FamilyTree::findChildren(string name){
-
+    Person *p1 = findPerson(name); 
+    int f = p1->children; 
+    LinkedList toReturn; 
+    for(int i = 0; i < families[f].children.size(); i++){
+        toReturn.push(families[f].children[i]->name); 
+    }
+    return toReturn; 
 }
 
 string FamilyTree::findCommonAncestor(string name1, string name2){
