@@ -47,21 +47,25 @@ class FamilyTree{
     private:
         vector<Family> families; 
         bool assigned;
+        int numGroups; 
         Person * findPerson(string name); 
         int findFamily(string p1, string p2); //return int of family
         void DFSLabel(int i, int ID); 
         void unvisit(); 
+        void assignFamily(); 
+        void DFSLabelAndPrint(int i, int ID); 
 
     public:
         FamilyTree(){
             assigned = false;
+            numGroups = -1; 
         };
         ~FamilyTree(){}; 
         bool buildTree(string file); 
         void printTree(); 
         int addFamily(string p1, string p2); //return int of family
         bool addChild(string p1, string p2, string child); 
-        void assignFamily(); 
+        void assignAndPrintFamily(); 
         bool areRelated(string name1, string name2);
         LinkedList findAncestors(string name); 
         LinkedList findSiblings(string name); 

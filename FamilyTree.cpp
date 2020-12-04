@@ -9,6 +9,7 @@
 using namespace std; 
 
 
+
 Person * FamilyTree::findPerson(string name){
     for(int i = 0; i < families.size(); i++){ 
         if(families[i].parent1->name == name){
@@ -106,7 +107,6 @@ void FamilyTree::assignFamily(){ //uses modified DFS to assign family IDS to any
             i++; 
         }
         if(i < families.size()){
-            //cout << "Group " << FamID << ":" << endl; //for debugging
             DFSLabel(i, FamID); 
         } 
         FamID++; 
@@ -114,6 +114,57 @@ void FamilyTree::assignFamily(){ //uses modified DFS to assign family IDS to any
     assigned = true;
     unvisit(); 
 }
+
+void FamilyTree::assignAndPrintFamily(){ //uses modified DFS to assign family IDS to anyone that is related (including by marriage)
+    int FamID = 1; 
+    int i = 0; 
+    while(i < families.size()){
+        while(families[i].visited){
+            i++; 
+        }
+        if(i < families.size()){
+            cout << "Family " << FamID << ":" << endl; 
+            DFSLabelAndPrint(i, FamID); 
+        } 
+        FamID++; 
+    }
+    assigned = true;
+    unvisit(); 
+}
+
+void FamilyTree::DFSLabelAndPrint(int i, int ID){
+    stack<int> s;
+    s.push(i); 
+    while(!s.empty()){
+        int current = s.top(); 
+        s.pop(); 
+        if(current != -1 && !families[current].visited){
+            families[current].FamID = ID; 
+            families[current].visited = true;
+            if(!families[current].parent1->visited){
+                families[current].parent1->FamID = ID;
+                families[current].parent1->visited = true;
+                cout << families[current].parent1->name << endl; //for debugging
+                s.push(families[current].parent1->parents);
+            }
+            if(!families[current].parent2->visited){
+                families[current].parent2->FamID = ID; 
+                families[current].parent2->visited = true;
+                cout << families[current].parent2->name << endl; //for debugging
+                s.push(families[current].parent2->parents); 
+            }
+            for(int i = 0; i < families[current].children.size(); i++){
+                if(!families[current].children[i]->visited){
+                    families[current].children[i]->FamID = ID; 
+                    families[current].children[i]->visited = true;
+                    cout << families[current].children[i]->name << endl; //for debugging
+                     s.push(families[current].children[i]->children); 
+                }
+            }
+        }
+    }
+}
+        
 
 void FamilyTree::DFSLabel(int i, int ID){
     stack<int> s;

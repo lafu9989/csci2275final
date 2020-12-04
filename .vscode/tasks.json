@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: clang++ build active file",
+			"command": "/usr/bin/clang++",
+			"args": [
+				"-std=c++11",
+				"-g",
+				"FamilyTree.cpp",
+				"LinkedList.cpp",
+				"main.cpp",
+				"-o",
+				"${fileDirname}/${fileBasenameNoExtension}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+		{
+			"label": "Open Terminal",
+			"type": "shell",
+			"command": "osascript -e 'tell application \"Terminal\"\ndo script \"echo hello\"\nend tell'",
+			"problemMatcher": []
+		}
+	]
+}
