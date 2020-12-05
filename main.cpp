@@ -6,10 +6,14 @@ using namespace std;
 
 int main(int argc, const char *argv[]){
     FamilyTree tree;
-    if (argc < 2) {
-        cout << "Missing family tree file!" << endl;
-        return 0; 
+    if (argc == 2) {
+        string filename(argv[1]);
+        tree.buildTree(filename); 
     }
+    else{
+        cout << "Filename not provided. Tree is empty." << endl; 
+    }
+    
     string dmenu =  "======Main Menu======\n"
                     "1. Print Tree\n"
                     "2. Add Family\n"
@@ -25,8 +29,6 @@ int main(int argc, const char *argv[]){
     int choice = 0;
     bool done = false;
     
-    string filename(argv[1]);
-    tree.buildTree(filename); 
     
     do {
         cout << dmenu;
