@@ -12,14 +12,17 @@ The family tree can be built from a CSV file, but it also has functions that all
 
 The test CSV file provided is based on some of the family trees from the Harry Potter series (it was the easiest fictional family tree I could think of). Below is a diagram of the family trees that the CSV file represents: 
 
-![Diagram of Harry Potter family trees](/assets/familytreegraphic.jpg)
+![Diagram of Harry Potter family trees](familytreegraphic.jpg)
 
 ### How to Run
 Included in the files is a shell script (**run.sh**), that has commands for compiling and running the program using the given testinputtree.csv file. On a UNIX system (Mac/Linux), you should just be able to run the command:
+
     ./run.sh
+
 You can change the input CSV file by changing "testinputtree.csv" in the shell file to the name of the file you want to input. 
 
 If you have trouble running the shell file, you should also be able to manually type in these commands to the terminal to compile and run the program. Make sure you are in the directory that the program files are stored in. 
+
     g++ -std=c++11 FamilyTree.cpp LinkedList.cpp main.cpp
     ./a.out testinputtree.csv
 
