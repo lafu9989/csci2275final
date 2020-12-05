@@ -1,5 +1,4 @@
-# csci2275final
-Repo for my CSCI 2275 final project.
+# CSCI 2275 Final Project: Family Tree
 
 ### Project Summary
 This project consists of a program that can store a family tree. 
