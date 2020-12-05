@@ -24,7 +24,7 @@
 				"kind": "build",
 				"isDefault": true
 			}
-		}
+		},
 		{
 			"label": "Open Terminal",
 			"type": "shell",
