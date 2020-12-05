@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["testinputtree.csv"],
+            "args": ["testinputtree.csv"], //name of input file
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],

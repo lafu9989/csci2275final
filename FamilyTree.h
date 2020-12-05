@@ -12,11 +12,11 @@ struct Person;
 struct Family;
 
 struct Family{
-    vector<Person *> children; //store pointers to children, not children themselves so its less complicated
-    Person *parent1;
+    vector<Person *> children; //stores pointers to children
+    Person *parent1; //pointer to parents
     Person *parent2; 
-    bool visited;
-    int FamID; 
+    bool visited; //used in DFS operations
+    int FamID; //used to assign family groups
 
     Family(Person *parent1, Person *parent2){
         this->parent1 = parent1; 
@@ -28,11 +28,10 @@ struct Family{
 
 struct Person{
     string name;
-    int parents;
-    int children;
-    bool visited;
-    int FamID; 
-    //store int of family instead of pointer --> less complex
+    int parents; //index of parent family
+    int children; //index of child family
+    bool visited; //used in DFS operations
+    int FamID; //used to assign family groups
 
     Person(string name){
         this->name = name; 
@@ -45,11 +44,10 @@ struct Person{
 
 class FamilyTree{
     private:
-        vector<Family> families; 
-        bool assigned;
-        int numGroups; 
+        vector<Family> families; //stores families in family tree
+        bool assigned; //checks if family groups have already been assigned (if so, no need to re-assign)
         Person * findPerson(string name); 
-        int findFamily(string p1, string p2); //return int of family
+        int findFamily(string p1, string p2); 
         void DFSLabel(int i, int ID); 
         void unvisit(); 
         void assignFamily(); 
@@ -58,12 +56,11 @@ class FamilyTree{
     public:
         FamilyTree(){
             assigned = false;
-            numGroups = -1; 
         };
         ~FamilyTree(){}; 
         bool buildTree(string file); 
         void printTree(); 
-        int addFamily(string p1, string p2); //return int of family
+        int addFamily(string p1, string p2); 
         bool addChild(string p1, string p2, string child); 
         void assignAndPrintFamily(); 
         bool areRelated(string name1, string name2);

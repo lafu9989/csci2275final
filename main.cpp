@@ -6,6 +6,9 @@ using namespace std;
 
 int main(int argc, const char *argv[]){
     FamilyTree tree;
+    
+    //if a filename argument is provided, use that to build the tree
+    //if not provided, a tree can still be manually built 
     if (argc == 2) {
         string filename(argv[1]);
         tree.buildTree(filename); 
@@ -13,7 +16,7 @@ int main(int argc, const char *argv[]){
     else{
         cout << "Filename not provided. Tree is empty." << endl; 
     }
-    
+
     string dmenu =  "======Main Menu======\n"
                     "1. Print Tree\n"
                     "2. Add Family\n"

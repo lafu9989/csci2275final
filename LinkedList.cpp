@@ -3,12 +3,14 @@
 
 using namespace std;
 
+//constructor
 LinkedList::LinkedList(){
     root = nullptr;
     tail = nullptr;
     currentSize = 0; 
 }
 
+//adds name to the end of the linked list
 void LinkedList::push(string name){
     LLPerson *toAdd = new LLPerson(name);
     if(root == nullptr){
@@ -24,7 +26,7 @@ void LinkedList::push(string name){
     }
 }
 
-
+//prints the contents of the linked list
 void LinkedList::printLL(){
     LLPerson *temp = root;
     while(temp != nullptr){
@@ -33,6 +35,7 @@ void LinkedList::printLL(){
     }
 }
 
+//returns the string at that index of the linked list (0-indexed)
 string LinkedList::valueAt(int index){
     if(index >= currentSize){
         return "";
@@ -46,6 +49,7 @@ string LinkedList::valueAt(int index){
     }
 }
 
+//checks if the linked list is empty, returns true if it is
 bool LinkedList::isEmpty(){
     if(currentSize == 0){
         return true;
@@ -53,6 +57,7 @@ bool LinkedList::isEmpty(){
     return false;
 }
 
+//returns the size of the linked list
 int LinkedList::size(){
     return currentSize; 
 }
