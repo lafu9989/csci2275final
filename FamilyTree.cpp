@@ -115,6 +115,15 @@ bool FamilyTree::addChild(string p1, string p2, string child){
         theFamily = addFamily(p1, p2); 
     }
 
+    //check that child being added is not the parent of either parent
+    if(toAdd->children != -1){
+        for(int i = 0; i < families[toAdd->children].children.size(); i++){
+            if(theFamily == families[toAdd->children].children[i]->children){
+                return false; 
+            }
+        }
+    }
+
     families[theFamily].children.push_back(toAdd); 
     toAdd->parents = theFamily; 
     return true; 
