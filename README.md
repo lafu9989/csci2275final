@@ -18,7 +18,7 @@ Included in the files is a shell script (**run.sh**), that has commands for comp
 
     ./run.sh
 
-You can change the input CSV file by changing "testinputtree.csv" in the shell file to the name of the file you want to input. 
+You can change the input CSV file by changing "testinputtree.csv" in the shell file to the name of the file you want to input. You can also run the program without inputting any file and build the tree manually.  
 
 If you have trouble running the shell file, you should also be able to manually type in these commands to the terminal to compile and run the program. Make sure you are in the directory that the program files are stored in. 
 
@@ -35,6 +35,7 @@ This program was built and tested on a Mac, but I believe it should work as expe
 Lauren Funston
 
 ### Contributors 
+Thanks to Luke Pan for completing my peer evaluation and helping to find bugs. 
 
 ### Open issues/bugs
 Right now the code only supports families with two parents (i.e., no single parents). It also doesn't allow for divorces or remarriages. While this isn't necessarily a bug in the code at the moment, it is an area where the program could be enhanced to cover these cases. 
